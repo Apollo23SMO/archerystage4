@@ -5,10 +5,13 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var canvas;
-var palyer, playerBase, playerArcher;
+var player, playerBase, playerArcher;
+var playerArrow = [];
 var arrow;
 var baseimage;
 var playerimage;
+
+var numberOfArrows = 10;
 
 function preload() {
   backgroundImg = loadImage("./assets/background.png");
@@ -56,11 +59,10 @@ function draw() {
   Engine.update(engine);
 
   playerArcher.display();
-  arrow.display();
 
-  for (var i = 0; i < playerArrows.length; i++) {
-    if (playerArrows[i] !== undefined) {
-      playerArrows[i].display();
+  for (var i = 0; i < playerArrow.length; i++) {
+    if (playerArrow[i] !== undefined) {
+      playerArrow[i].display();
     }
   }
 
@@ -81,15 +83,15 @@ function keyPressed() {
     var arrow = new PlayerArrow(posX, posY, 100, 10, angle);
 
     Matter.Body.setAngle(arrow.body, angle);
-    playerArrows.push(arrow);
+    playerArrow.push(arrow);
   }
 }
 
 function keyReleased() {
   if (keyCode === 32) {
-    if (playerArrows.length) {
+    if (playerArrow.length) {
       var angle = playerArcher.body.angle;
-      playerArrows[playerArrows.length - 1].shoot(angle);
+      playerArrow[playerArrow.length - 1].shoot(angle);
     }
   }
 }
